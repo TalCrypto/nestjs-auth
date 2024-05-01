@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Delete, Param, Post, UseGuards } from '@nestjs/common';
 import { Roles } from '../common/decorators/roles.decorator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import { CatsService } from './cats.service';
-import { CreateCatDto } from './dto/create-cat.dto';
-import { Cat } from './interfaces/cat.interface';
+import { CreateCatDto, UpdateCatDto } from './dto';
+import { ICat } from './interfaces/cat.interface';
 
 @UseGuards(RolesGuard)
 @Controller('cats')
@@ -18,7 +18,7 @@ export class CatsController {
   }
 
   @Get()
-  async findAll(): Promise<Cat[]> {
+  async findAll(): Promise<ICat[]> {
     return this.catsService.findAll();
   }
 
@@ -26,7 +26,24 @@ export class CatsController {
   findOne(
     @Param('id', new ParseIntPipe())
     id: number,
-  ) {
+  ): Promise<ICat> {
     // get by ID logic
+    return this.catsService.fineOne(id);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id', new ParseIntPipe())
+    id: number,
+    @Body() body: UpdateCatDto,
+  ): Promise<ICat> {
+    return this.catsService.updateCat(id, body);
+  }
+
+  @Delete(':id')
+  remove(
+    @Param('id') id: number,
+  ): Promise<boolean> {
+    return this.catsService.deleteCat(id);
   }
 }
