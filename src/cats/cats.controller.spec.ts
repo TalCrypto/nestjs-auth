@@ -3,7 +3,7 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { CatsController } from "./cats.controller";
 import { CatsService } from "./cats.service";
 import { ICat } from "./interfaces/cat.interface";
-import { Cat } from "../entity/cat.entity";
+import { Cat } from "../common/entity/cat.entity";
 import { NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { UpdateCatDto } from "./dto";
