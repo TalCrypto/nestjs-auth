@@ -5,7 +5,7 @@ This project is an authentication nestjs project utilizing TypeORM(PostgreSQL) a
 
 ## Prerequisite
 
-Insall Node >= 18.0.0 and [Docker](https://docs.docker.com/engine/install/ubuntu/)
+Install Node >= 18.0.0 and [Docker](https://docs.docker.com/engine/install/ubuntu/)
 
 ## Running the app
 
