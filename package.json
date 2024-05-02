@@ -16,7 +16,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "set NODE_ENV=test&&jest --config ./e2e/jest-e2e.json"
+    "test:e2e": "set NODE_ENV=test&&jest --config ./e2e/jest-e2e.json",
+    "docker:dev": "sudo docker compose -f docker-compose.dev.yml up",
+    "docker:e2e": "sudo docker compose -f docker-compose.e2e.yml up --abort-on-container-exit --exit-code-from app"
   },
   "dependencies": {
     "@nestjs/common": "10.3.2",

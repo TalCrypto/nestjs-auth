@@ -6,7 +6,6 @@ import { CatsService } from "../../src/cats/cats.service";
 import { Cat } from "../../src/common/entity/cat.entity";
 import { AppModule } from "../../src/app.module";
 import { AuthService } from "../../src/auth/auth.service";
-import { before } from "node:test";
 
 describe("Cats", () => {
   let app: INestApplication;
@@ -19,7 +18,7 @@ describe("Cats", () => {
     { id: 4, name: "Leo", age: 4, breed: "Bengal" },
   ];
   let bearerToken: string;
-  before(async () => {
+  beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, TypeOrmModule.forFeature([Cat])],
       providers: [CatsService],
