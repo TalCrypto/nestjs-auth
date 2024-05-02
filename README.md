@@ -1,25 +1,17 @@
-
+![image](https://github.com/TalCrypto/nestjs-auth/assets/83287152/625b92d5-30f6-4e07-833a-85f5c5b40b15)
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project is an authentication nestjs project utilizing TypeORM(PostgreSQL) and Passport.js(JWT).
 
-## Installation
+## Prerequisite
 
-```bash
-$ npm install
-```
+Insall Node >= 18.0.0 and [Docker](https://docs.docker.com/engine/install/ubuntu/)
 
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
 # watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ npm run docker:dev
 ```
 
 ## Test
@@ -29,12 +21,11 @@ $ npm run start:prod
 $ npm run test
 
 # e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ npm run docker:e2e
 ```
 
-## Support
+## Summary
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+This project uses a docker container to run nestjs and built-in postgresql image.
+After running the watch mode, visit [here](http://localhost:3000/help).
+Especially, e2e tests are doing within the docker container, which is an efficient way in case of applying CI workflow.
