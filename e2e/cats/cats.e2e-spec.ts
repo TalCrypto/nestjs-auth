@@ -1,53 +1,90 @@
 import { INestApplication } from "@nestjs/common";
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import * as request from "supertest";
-import { ConfigModule } from "@nestjs/config";
-import { DatabaseModule } from "../../src/config/database/database.module";
-import { CatsModule } from "../../src/cats/cats.module";
 import { CatsService } from "../../src/cats/cats.service";
-import { CoreModule } from "../../src/core/core.module";
-import { Cat } from "../../src/entity/cat.entity";
+import { Cat } from "../../src/common/entity/cat.entity";
+import { AppModule } from "../../src/app.module";
+import { AuthService } from "../../src/auth/auth.service";
+import { before } from "node:test";
 
 describe("Cats", () => {
   let app: INestApplication;
   let catsService: CatsService;
+  let authService: AuthService;
   let dataSets = [
     { id: 1, name: "Luna", age: 1, breed: "Persian" },
     { id: 2, name: "Simba", age: 2, breed: "Siamese" },
     { id: 3, name: "Bella", age: 3, breed: "Abyssinian" },
     { id: 4, name: "Leo", age: 4, breed: "Bengal" },
   ];
-
-  beforeAll(async () => {
-    const moduleRef: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-        }),
-        TypeOrmModule.forFeature([Cat]),
-        CoreModule,
-        CatsModule,
-        DatabaseModule,
-      ],
+  let bearerToken: string;
+  before(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule, TypeOrmModule.forFeature([Cat])],
       providers: [CatsService],
     }).compile();
 
     app = moduleRef.createNestApplication();
     catsService = moduleRef.get<CatsService>(CatsService);
+    authService = moduleRef.get<AuthService>(AuthService);
     await app.init();
     // Reset test database
     await catsService.clearDatabase();
     await catsService.seedTestData();
-  });
 
-  it(`/GET cats`, async () => {
-    let result = await catsService.findAll();
-    return request(app.getHttpServer()).get("/cats").expect(200).expect({
-      data: dataSets,
+    const { access_token } = await authService.login({
+      username: "username",
+      password: "password",
     });
+    bearerToken = access_token;
   });
 
+  it("should return all cats.", async () => {
+    let result = await catsService.findAll();
+    return request(app.getHttpServer())
+      .get("/cats")
+      .set("Authorization", `Bearer ${bearerToken}`)
+      .expect(200)
+      .expect({
+        data: dataSets,
+      });
+  });
+
+  it("should return a cat.", async () => {
+    return request(app.getHttpServer())
+      .get("/cats/1")
+      .set("Authorization", `Bearer ${bearerToken}`)
+      .expect(200)
+      .expect({
+        data: {
+          id: 1,
+          name: "Luna",
+          age: 1,
+          breed: "Persian",
+        },
+      });
+  });
+
+  it("should create new cat.", async () => {
+    return request(app.getHttpServer())
+      .post("/cats")
+      .send({
+        name: "Bob",
+        age: 3,
+        breed: "Bangal",
+      })
+      .set("Authorization", `Bearer ${bearerToken}`)
+      .expect(201)
+      .expect({
+        data: {
+          id: 5,
+          name: "Bob",
+          age: 3,
+          breed: "Bangal",
+        },
+      });
+  });
   afterAll(async () => {
     await app.close();
   });
