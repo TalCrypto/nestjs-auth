@@ -15,11 +15,12 @@ import { RolesGuard } from "../common/guards/roles.guard";
 import { CatsService } from "./cats.service";
 import { CreateCatDto, UpdateCatDto } from "./dto";
 import { ICat } from "./interfaces/cat.interface";
-import { JwtAuthGuard } from "src/common/guards/jwt-auth.guard";
+import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
+
 @ApiBearerAuth()
 @ApiTags("Cats")
-@UseGuards(JwtAuthGuard)
 @UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard)
 @Controller("cats")
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}

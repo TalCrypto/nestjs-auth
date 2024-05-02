@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ConfigService } from "@nestjs/config";
 import { User } from "../common/entity";
-import { RegisterAuthDto } from "src/auth/dto";
+import { RegisterAuthDto } from "../auth/dto";
 
 @Injectable()
 export class UsersService {
@@ -40,5 +40,10 @@ export class UsersService {
         username,
       },
     });
+  }
+
+  async deleteUser(id: number): Promise<boolean> {
+    await this.userepository.delete(id);
+    return true;
   }
 }
