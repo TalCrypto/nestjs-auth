@@ -15,8 +15,8 @@ export class CatsController {
 
   @Post()
   @Roles(['admin'])
-  async create(@Body() createCatDto: CreateCatDto) {
-    this.catsService.create(createCatDto);
+  async create(@Body() createCatDto: CreateCatDto): Promise<ICat> {
+    return this.catsService.create(createCatDto);
   }
 
   @Get()
