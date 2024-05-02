@@ -16,6 +16,7 @@ function configureSwagger(app: NestExpressApplication): void {
     .setTitle("NestJS API")
     .setDescription("Users and Cats")
     .setVersion("0.0.1")
+    .addBearerAuth()
     .build();
 
   // Create a Swagger document using the application instance and the document configuration
