@@ -2,16 +2,11 @@ import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import * as request from "supertest";
-import { CatsService } from "../../src/cats/cats.service";
-import { Cat } from "../../src/common/entity/cat.entity";
 import { AppModule } from "../../src/app.module";
 import { AuthService } from "../../src/auth/auth.service";
 import { UsersService } from "../../src/users/users.service";
 import { User } from "../../src/common/entity";
 import { UsersModule } from "../../src/users/users.module";
-import { PassportModule } from "@nestjs/passport";
-import { JwtModule } from "@nestjs/jwt";
-import { ConfigModule, ConfigService } from "@nestjs/config";
 
 describe("Auth", () => {
   let app: INestApplication;
