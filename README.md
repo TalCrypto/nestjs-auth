@@ -25,6 +25,6 @@ $ npm run docker:e2e
 
 ## Summary
 
-This project uses a docker container to run nestjs and built-in postgresql image.
+This project uses a docker container to run nestjs and built-in PostgreSQL image.
 After running the watch mode, visit [here](http://localhost:3000/help).
-Especially, e2e tests are doing within the docker container, which is an efficient way in case of applying CI workflow.
+Especially, e2e tests are done within the docker container, which is an efficient way in case of applying CI workflow.
