@@ -7,6 +7,7 @@ import { Cat } from "../common/entity/cat.entity";
 import { NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { UpdateCatDto } from "./dto";
+import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 
 describe("CatsController", () => {
   let catsController: CatsController;
@@ -64,6 +65,13 @@ describe("CatsController", () => {
 
   it("should be defined", () => {
     expect(catsController).toBeDefined();
+  });
+
+  it("should ensure the JwtAuthGuard is applied to the user method", async () => {
+    const guards = Reflect.getMetadata("__guards__", CatsController);
+    const guard = new guards[0]();
+
+    expect(guard).toBeInstanceOf(JwtAuthGuard);
   });
 
   describe("findAll", () => {
