@@ -20,7 +20,7 @@ import configuration from "./common/config/configuration";
       useFactory: async (configService: ConfigService) => {
         const DB_HOST = configService.get<string>("database.host");
         const DB_PORT = configService.get<number>("database.port");
-        const DB_NAME = configService.get<string>("database.dbName");
+        const DB_NAME = configService.get<string>("database.dbname");
         const DB_USER = configService.get<string>("database.username");
         const DB_PASSWORD = configService.get<string>("database.password");
         const SYNC = configService.get<boolean>("database.synchronize");
