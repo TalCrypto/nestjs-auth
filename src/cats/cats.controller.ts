@@ -7,11 +7,11 @@ import {
   Param,
   Post,
   UseGuards,
+  ParseIntPipe,
 } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles.decorator";
 import { RolesGuard } from "../common/guards/roles.guard";
-import { ParseIntPipe } from "../common/pipes/parse-int.pipe";
 import { CatsService } from "./cats.service";
 import { CreateCatDto, UpdateCatDto } from "./dto";
 import { ICat } from "./interfaces/cat.interface";

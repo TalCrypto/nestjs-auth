@@ -1,7 +1,7 @@
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
-const validationPipeService = require("@nestts/validation-pipes");
+// const validationPipeService = require("@nestts/validation-pipes");
 import {
   DocumentBuilder,
   SwaggerModule,
@@ -32,7 +32,7 @@ function configureSwagger(app: NestExpressApplication): void {
 
 async function bootstrap() {
   try {
-    validationPipeService();
+    // validationPipeService();
     const app: NestExpressApplication =
       await NestFactory.create<NestExpressApplication>(AppModule);
 
