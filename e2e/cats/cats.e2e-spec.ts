@@ -6,6 +6,7 @@ import { CatsService } from "../../src/cats/cats.service";
 import { Cat } from "../../src/common/entity/cat.entity";
 import { AppModule } from "../../src/app.module";
 import { AuthService } from "../../src/auth/auth.service";
+import { UserRole } from "../../src/common/types/user-role.enum";
 
 describe("Cats", () => {
   let app: INestApplication;
@@ -35,6 +36,7 @@ describe("Cats", () => {
     const { access_token } = await authService.login({
       username: "username",
       password: "password",
+      roles: [UserRole.ADMIN],
     });
     bearerToken = access_token;
   });
@@ -65,7 +67,7 @@ describe("Cats", () => {
       });
   });
 
-  it("should create new cat.", async () => {
+  it("should be 401 if user is not logged in", async () => {
     return request(app.getHttpServer())
       .post("/cats")
       .send({
@@ -73,11 +75,60 @@ describe("Cats", () => {
         age: 3,
         breed: "Bangal",
       })
+      .expect(401);
+  });
+
+  it("should be 403 if user doesn't have admin role", async () => {
+    const { access_token } = await authService.login({
+      username: "username",
+      password: "password",
+      roles: [UserRole.USER],
+    });
+
+    return request(app.getHttpServer())
+      .post("/cats")
+      .send({
+        name: "Bob",
+        age: 3,
+        breed: "Bangal",
+      })
+      .set("Authorization", `Bearer ${access_token}`)
+      .expect(403);
+  });
+
+  it("should create new cat", async () => {
+    return request(app.getHttpServer())
+      .post("/cats")
+      .send({
+        name: "Luna",
+        age: 1,
+        breed: "Persian",
+      })
       .set("Authorization", `Bearer ${bearerToken}`)
       .expect(201)
       .expect({
         data: {
           id: 5,
+          name: "Luna",
+          age: 1,
+          breed: "Persian",
+        },
+      });
+  });
+
+  it("should update cat", async () => {
+    return request(app.getHttpServer())
+      .patch("/cats/1")
+      .send({
+        name: "Bob",
+        age: 3,
+        breed: "Bangal",
+      })
+      .set("Authorization", `Bearer ${bearerToken}`)
+      .expect(200)
+      .expect({
+        data: {
+          id: 1,
           name: "Bob",
           age: 3,
           breed: "Bangal",
