@@ -16,7 +16,6 @@ import configuration from "./common/config/configuration";
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const DB_HOST = configService.get<string>("database.host");

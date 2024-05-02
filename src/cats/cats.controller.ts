@@ -15,8 +15,10 @@ import { RolesGuard } from "../common/guards/roles.guard";
 import { CatsService } from "./cats.service";
 import { CreateCatDto, UpdateCatDto } from "./dto";
 import { ICat } from "./interfaces/cat.interface";
+import { JwtAuthGuard } from "src/common/guards/jwt-auth.guard";
 
 @ApiTags("Cats")
+@UseGuards(JwtAuthGuard)
 @UseGuards(RolesGuard)
 @Controller("cats")
 export class CatsController {
@@ -52,6 +54,7 @@ export class CatsController {
   }
 
   @Delete(":id")
+  @Roles(["admin"])
   remove(@Param("id") id: number): Promise<boolean> {
     return this.catsService.deleteCat(id);
   }
