@@ -1,4 +1,3 @@
-![image](https://github.com/TalCrypto/nestjs-auth/assets/83287152/625b92d5-30f6-4e07-833a-85f5c5b40b15)
 ## Description
 
 This project is an authentication nestjs project utilizing TypeORM(PostgreSQL) and Passport.js(JWT).
