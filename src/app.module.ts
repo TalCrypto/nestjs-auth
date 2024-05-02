@@ -6,7 +6,6 @@ import { CatsModule } from "./cats/cats.module";
 import { CoreModule } from "./core/core.module";
 import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
-import { Cat, User } from "./entity";
 import configuration from "./config/configuration";
 
 @Module({
@@ -34,7 +33,6 @@ import configuration from "./config/configuration";
           username: DB_USER,
           password: DB_PASSWORD,
           database: DB_NAME,
-          entities: [Cat, User],
           autoLoadEntities: true,
           synchronize: SYNC,
         };
