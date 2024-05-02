@@ -24,6 +24,7 @@ import configuration from "./common/config/configuration";
         const DB_NAME = configService.get<string>("database.dbName");
         const DB_USER = configService.get<string>("database.username");
         const DB_PASSWORD = configService.get<string>("database.password");
+        const SYNC = configService.get<boolean>("database.synchronize");
 
         return {
           type: "postgres",
@@ -33,6 +34,7 @@ import configuration from "./common/config/configuration";
           password: DB_PASSWORD,
           database: DB_NAME,
           autoLoadEntities: true,
+          synchronize: SYNC,
         };
       },
     }),
