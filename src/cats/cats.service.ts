@@ -41,7 +41,7 @@ export class CatsService {
     await this.catRepository.query(`TRUNCATE TABLE CATS  RESTART IDENTITY;`);
   }
 
-  async  seedTestData(): Promise<void> {
+  async seedTestData(): Promise<void> {
     // Execute raw SQL queries to insert test data
     await this.catRepository.query(`
       INSERT INTO CATS
