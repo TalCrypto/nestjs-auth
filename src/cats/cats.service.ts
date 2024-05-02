@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Cat } from '../entity/cat.entity';
-import { CreateCatDto, UpdateCatDto } from './dto';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Cat } from "../entity/cat.entity";
+import { CreateCatDto, UpdateCatDto } from "./dto";
 
 @Injectable()
 export class CatsService {
@@ -18,16 +18,16 @@ export class CatsService {
   findAll(): Promise<Cat[]> {
     return this.catRepository.find({
       order: {
-        id: 'ASC'
+        id: "ASC",
       },
     });
   }
 
   async fineOne(id: number): Promise<Cat> {
-    return this.catRepository.findOneById (id);
+    return this.catRepository.findOneById(id);
   }
 
-  async updateCat(id: number,UpdateCatDto: UpdateCatDto): Promise<Cat> {
+  async updateCat(id: number, UpdateCatDto: UpdateCatDto): Promise<Cat> {
     await this.catRepository.update(id, UpdateCatDto);
     return this.catRepository.findOneById(id);
   }

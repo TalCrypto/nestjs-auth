@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsString } from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsInt, IsString } from "class-validator";
 
 export class CreateCatDto {
   @IsString()
-  @ApiProperty({ example: 'Luna' })
+  @ApiProperty({ example: "Luna" })
   readonly name: string;
 
   @IsInt()
@@ -11,6 +11,6 @@ export class CreateCatDto {
   readonly age: number;
 
   @IsString()
-  @ApiProperty({ example: 'Persian' })
+  @ApiProperty({ example: "Persian" })
   readonly breed: string;
 }
